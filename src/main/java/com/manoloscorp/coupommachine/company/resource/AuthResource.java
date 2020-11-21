@@ -31,5 +31,4 @@ public class AuthResource {
 
         return ResponseEntity.ok("User logged");
     }
-
 }

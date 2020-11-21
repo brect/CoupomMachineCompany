@@ -31,5 +31,4 @@ public class BenefitRequest {
     @NotNull
     @NotEmpty
     private Long userId;
-
 }

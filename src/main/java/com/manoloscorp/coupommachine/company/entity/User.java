@@ -9,8 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.CascadeType.ALL;
-
 @Entity
 @Table(name = "TB_USER_LEGAL")
 @Data
@@ -18,7 +16,6 @@ import static javax.persistence.CascadeType.ALL;
 @NoArgsConstructor
 @SequenceGenerator(name = "user_legal", sequenceName = "SQ_TB_USER_LEGAL", allocationSize = 1)
 public class User {
-
     @Id
     @Column(name = "id_user_legal")
     @GeneratedValue(generator = "user_legal", strategy = GenerationType.SEQUENCE)

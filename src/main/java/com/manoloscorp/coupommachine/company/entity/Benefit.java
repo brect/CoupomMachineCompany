@@ -13,7 +13,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SequenceGenerator(name = "Benefit", sequenceName = "SQ_TB_BENEFIT", allocationSize = 1)
 public class Benefit {
-
     @Id
     @Column(name = "id_benefit")
     @GeneratedValue(generator = "benefit", strategy = GenerationType.SEQUENCE)

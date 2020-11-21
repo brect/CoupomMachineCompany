@@ -7,7 +7,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 public class UserRequest {
-
     @NotNull
     @NotEmpty
     private String name;

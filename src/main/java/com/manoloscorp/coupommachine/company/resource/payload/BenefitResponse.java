@@ -32,5 +32,4 @@ public class BenefitResponse {
     @NotNull
     @NotEmpty
     private User userId;
-
 }

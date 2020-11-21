@@ -8,8 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @CrossOrigin
 @RequestMapping(value = RestConstants.APPLICATION_API + RestConstants.CREDIT, produces = MediaType.APPLICATION_JSON_VALUE)
