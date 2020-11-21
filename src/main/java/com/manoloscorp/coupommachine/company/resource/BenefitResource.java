@@ -33,14 +33,11 @@ public class BenefitResource {
         this.mapper = mapper;
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAllBenefits(@PathVariable Long id) {
-
-        Optional<User> user = userRepository.findById(id);
-
-        List<Benefit> benefits = user.get().getBenefits();
-
-        return new ResponseEntity<List>(benefits, HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<?>  getBenefitByUser(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        List<Benefit> benefits = user.getBenefits();
+        return ResponseEntity.ok().body(benefits);
     }
 
     @PostMapping
@@ -53,7 +50,9 @@ public class BenefitResource {
 
         benefit.setUser(user);
 
-        repository.save(benefit);
+        user.getBenefits().add(benefit);
+
+        userRepository.save(user);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

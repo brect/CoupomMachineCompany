@@ -34,8 +34,8 @@ public class Benefit {
     @Column(nullable = false)
     private double budget;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_user_legal")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_user_legal", nullable = false)
     private User user;
 
     public void updateBenefit(Benefit request) {

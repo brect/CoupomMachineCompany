@@ -1,10 +1,12 @@
 package com.manoloscorp.coupommachine.company.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
@@ -46,6 +48,10 @@ public class User {
     @Column(nullable = true)
     private Double credit;
 
-    @OneToMany(cascade = ALL, mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Benefit> benefits;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private List<Benefit> benefits = new ArrayList<>();;
+
 }

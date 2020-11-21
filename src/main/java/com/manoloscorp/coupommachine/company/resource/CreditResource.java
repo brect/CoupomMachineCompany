@@ -29,15 +29,17 @@ public class CreditResource {
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateCredit(@PathVariable Long id, @RequestBody Long request) {
 
-        Optional<User> user = repository.findById(id);
+        User user = repository.findById(id).orElseThrow();
 
-        double currentCredit = user.get().getCredit();
+        double currentCredit = user.getCredit();
 
         currentCredit += request;
 
-        user.get().setCredit(currentCredit);
+        user.setCredit(currentCredit);
 
-        return ResponseEntity.ok().body(user.get().getCredit());
+        repository.save(user);
+
+        return ResponseEntity.ok().body(user.getCredit());
     }
 
 }
