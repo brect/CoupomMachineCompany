@@ -36,15 +36,15 @@ public class Benefit {
 
     @ManyToOne
     @JoinColumn(name = "fk_id_user_legal")
-    private Benefit benefit;
+    private User user;
 
-    public void updateBenefit(Benefit request){
+    public void updateBenefit(Benefit request) {
         this.id = request.getId();
         this.productService = request.getProductService();
         this.description = request.getDescription();
         this.value = request.getValue();
         this.discount = request.getDiscount();
         this.budget = request.getBudget();
-        this.benefit = request.getBenefit();
+        this.user = request.getUser();
     }
 }
