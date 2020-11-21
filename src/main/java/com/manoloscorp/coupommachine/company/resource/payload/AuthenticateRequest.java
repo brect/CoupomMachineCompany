@@ -1,4 +1,4 @@
-package com.manoloscorp.coupommachine.company.resource.request;
+package com.manoloscorp.coupommachine.company.resource.payload;
 
 import com.sun.istack.NotNull;
 import lombok.Data;

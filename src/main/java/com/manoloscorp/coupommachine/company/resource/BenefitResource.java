@@ -1,8 +1,13 @@
 package com.manoloscorp.coupommachine.company.resource;
 
 import com.manoloscorp.coupommachine.company.entity.Benefit;
+import com.manoloscorp.coupommachine.company.entity.User;
 import com.manoloscorp.coupommachine.company.repository.BenefitRepository;
+import com.manoloscorp.coupommachine.company.repository.UserRepository;
+import com.manoloscorp.coupommachine.company.resource.payload.BenefitRequest;
+import com.manoloscorp.coupommachine.company.resource.payload.BenefitResponse;
 import com.manoloscorp.coupommachine.company.shared.RestConstants;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,30 +24,44 @@ import java.util.Optional;
 public class BenefitResource {
 
     private BenefitRepository repository;
+    private UserRepository userRepository;
+    private final ModelMapper mapper;
 
-    public BenefitResource(BenefitRepository repository) {
+    public BenefitResource(BenefitRepository repository, UserRepository userRepository, ModelMapper mapper) {
         this.repository = repository;
+        this.userRepository = userRepository;
+        this.mapper = mapper;
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllBenefits() {
-        List<Benefit> benefits = repository.findAll();
+    public ResponseEntity<?> getAllBenefits(@PathVariable Long id) {
+
+        Optional<User> user = userRepository.findById(id);
+
+        List<Benefit> benefits = user.get().getBenefits();
+
         return new ResponseEntity<List>(benefits, HttpStatus.OK);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createBenefit(@RequestBody Benefit request) {
+    public ResponseEntity<?> createBenefit(@RequestBody BenefitRequest request) {
 
-        repository.save(request);
+        User user = userRepository.findById(request.getUserId()).orElseThrow();
+
+        Benefit benefit = mapper.map(request, Benefit.class);
+
+        benefit.setUser(user);
+
+        repository.save(benefit);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(request.getId())
+                .buildAndExpand(benefit.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(request);
+        return ResponseEntity.created(uri).body(benefit);
     }
 
     @PutMapping(value = "/{id}")

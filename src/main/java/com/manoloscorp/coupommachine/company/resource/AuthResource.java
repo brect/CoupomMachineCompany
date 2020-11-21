@@ -2,7 +2,7 @@ package com.manoloscorp.coupommachine.company.resource;
 
 import com.manoloscorp.coupommachine.company.entity.User;
 import com.manoloscorp.coupommachine.company.repository.UserRepository;
-import com.manoloscorp.coupommachine.company.resource.request.AuthenticateRequest;
+import com.manoloscorp.coupommachine.company.resource.payload.AuthenticateRequest;
 import com.manoloscorp.coupommachine.company.shared.RestConstants;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class AuthResource {
     public ResponseEntity<?> authenticateUser(@RequestBody AuthenticateRequest request) throws Exception {
         User user = repository.findByEmail(request.getEmail());
 
-        if (user.getPassword() != request.getPassword()) {
+        if (!user.getPassword().equals(request.getPassword())) {
             return ResponseEntity
                     .badRequest()
                     .body(("Error: Password is incorrect!"));
