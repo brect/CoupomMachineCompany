@@ -23,9 +23,6 @@ public class Benefit {
     private String productService;
 
     @Column(nullable = false)
-    private String code;
-
-    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
@@ -44,7 +41,6 @@ public class Benefit {
     public void updateBenefit(Benefit request){
         this.id = request.getId();
         this.productService = request.getProductService();
-        this.code = request.getCode();
         this.description = request.getDescription();
         this.value = request.getValue();
         this.discount = request.getDiscount();
